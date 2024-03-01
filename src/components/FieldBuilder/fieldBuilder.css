@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: 50px 150px;
+  border: 1px solid rgb(133, 215, 240);
+  border-radius: 5px;
+}
+
+.field-header {
+  padding: 20px;
+  text-align: left;
+  color: rgb(23, 87, 140);
+  background-color: rgb(193, 227, 237);
+  border-bottom: 1px solid rgb(133, 215, 240);
+}
+
+.field-header h2 {
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 70px;
+}
+
+/* .input-container label {
+  width: 150px;
+  margin-right: 100px;
+} */
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25px;
+}
+
+.input-container .left,
+.input-container .right {
+  /* flex: 1; */
+  text-align: left;
+}
+
+.input-container .left {
+  flex: 1;
+  font-weight: 600;
+}
+
+.input-container .right {
+  flex: 2;
+}
+
+/* .input-container .left {
+  text-align: left;
+} */
+
+.input-container input[type="text"],
+.input-container select,
+textarea {
+  width: 320px;
+  padding: 10px;
+}
+
+.your-choice-container {
+  border: 1px solid gray;
+  width: 320px;
+  padding: 10px;
+  height: 100px;
+  border-radius: 5px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.you-choice-element {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.input-container textarea {
+  resize: none;
+}
+
+.input-container input[type="checkbox"] {
+  margin: 0px 10px;
+}
+
+/* .buttons button {
+  padding: 10px;
+  margin: 20px;
+  outline: none;
+  border: none;
+  width: 120px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+} */
+
+.error {
+  margin-top: 5px;
+  color: red;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+/* .submit-button {
+  background-color: rgb(108, 167, 108);
+  color: white;
+}
+
+.clear-button {
+  background-color: rgb(181, 39, 39);
+  color: white;
+} */
+
+@media (max-width: 850px) {
+  .input-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .container {
+    margin: 50px 50px;
+  }
+}
+
+@media (max-width: 730px) {
+  .container {
+    margin: 50px 50px;
+  }
+  .content {
+    padding: 20px;
+  }
+  .input-container input[type="text"],
+  .input-container select,
+  textarea,
+  .your-choice-container {
+    width: 90%;
+    padding: 5px;
+  }
+}
