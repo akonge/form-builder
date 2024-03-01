@@ -18,6 +18,7 @@ const FieldBuilder = () => {
   const [defaultValue, setDefaultValue] = useState(storedDefaultValue);
   const [choice, setChoice] = useState(storedChoice);
   const [choices, setChoices] = useState(storedChoices);
+  console.log("Hello    FieldBuilder   choices:", choices);
   const [order, setOrder] = useState(storedOrder);
 
   const [labelError, setLabelError] = useState(false);
@@ -66,21 +67,20 @@ const FieldBuilder = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    if (label === "") {
+    if (label.length == 0) {
       setLabelError(true);
-    } else {
-      setLabelError("");
+      setIsLoading(false);
+      return;
     }
 
-    // If there is error in input validation, we return
-    if (labelError || choiceError) {
+    if (choiceError) {
       setIsLoading(false);
       return;
     }
 
     let updatedChoices = choices;
 
-    if (choices.length == 0 && defaultValue == "") {
+    if (choices.length == 0 && defaultValue.length === 0) {
       setFormError("Please enter atleast 1 choice");
       setIsLoading(false);
       return;
@@ -112,7 +112,7 @@ const FieldBuilder = () => {
       console.log("Error:", error?.message || error);
     }
 
-    setFormError("");
+    clearErrors();
     setIsLoading(false);
     console.log("Submitted Data");
     console.log(payload);
@@ -123,16 +123,17 @@ const FieldBuilder = () => {
       const updatedChoice = choice.slice(0, 40);
 
       if (choices.includes(updatedChoice)) {
-        setNewChoiceErr("*Cannot enter duplicate choices");
+        setNewChoiceErr("Cannot enter duplicate choices");
         return;
       } else if (choices.length >= 50) {
-        setNewChoiceErr("*Cannot add more than 50 choices");
+        setNewChoiceErr("Cannot add more than 50 choices");
         return;
       }
 
       setChoices([...choices, updatedChoice]);
       setChoice("");
       setNewChoiceErr("");
+      setFormError("");
     }
   };
 
@@ -144,6 +145,16 @@ const FieldBuilder = () => {
       setNewChoiceErr("");
       setChoiceError("");
     }
+  };
+
+  const handleLabelChange = (e) => {
+    if (label.length > 0) setLabelError(false);
+    setLabel(e.target.value);
+  };
+
+  const handleDefaultValueChange = (e) => {
+    if (defaultValue.length > 0) setFormError(false);
+    setDefaultValue(e.target.value);
   };
 
   return (
@@ -162,12 +173,12 @@ const FieldBuilder = () => {
                 <input
                   type="text"
                   placeholder="Enter Label"
-                  onInput={(e) => setLabel(e.target.value)}
+                  onInput={(e) => handleLabelChange(e)}
                   value={label}
                   id="label"
                 />
                 {labelError && (
-                  <p className="error">*Value for label is required</p>
+                  <p className="error">Value for label is required</p>
                 )}
               </div>
             </div>
@@ -198,7 +209,7 @@ const FieldBuilder = () => {
                   id="val"
                   type="text"
                   placeholder="Enter default value"
-                  onInput={(e) => setDefaultValue(e.target.value)}
+                  onInput={(e) => handleDefaultValueChange(e)}
                   value={defaultValue}
                 />
               </div>
