@@ -62,8 +62,6 @@ const FieldBuilder = () => {
 
   // Handle all Input Validations
   const handleInputValidation = () => {
-    // clearErrors();
-
     if (label === "") {
       setLabelError(true);
     }
