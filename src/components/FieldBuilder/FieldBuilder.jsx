@@ -3,6 +3,8 @@ import axios from "axios";
 import "./fieldBuilder.css";
 import Button from "../Button/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const FieldBuilder = () => {
   const storedFormData = JSON.parse(localStorage.getItem("form-data")) || {};
@@ -25,6 +27,7 @@ const FieldBuilder = () => {
   const [choiceError, setChoiceError] = useState("");
   const [formError, setFormError] = useState("");
 
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   // Update local storage whenever any of the form data changes
@@ -113,6 +116,7 @@ const FieldBuilder = () => {
 
     clearErrors();
     setIsLoading(false);
+    setIsOpen(true);
     console.log("Submitted Data");
     console.log(payload);
   };
@@ -292,6 +296,20 @@ const FieldBuilder = () => {
               buttonText="Clear"
             />
           </div>
+          <Snackbar
+            open={isOpen}
+            autoHideDuration={3000}
+            onClose={() => setIsOpen(false)}
+          >
+            <Alert
+              onClose={() => setIsOpen(false)}
+              severity="success"
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              Form was submitted
+            </Alert>
+          </Snackbar>
         </div>
       </div>
     </div>
