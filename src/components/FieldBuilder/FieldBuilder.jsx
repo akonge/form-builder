@@ -23,6 +23,7 @@ const FieldBuilder = () => {
   const [labelError, setLabelError] = useState(false);
   const [newChoiceErr, setNewChoiceErr] = useState("");
   const [choiceError, setChoiceError] = useState("");
+  const [formError, setFormError] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,6 +47,7 @@ const FieldBuilder = () => {
     setLabelError(false);
     setChoiceError("");
     setNewChoiceErr("");
+    setFormError("");
   };
 
   // Handle Clear Button
@@ -60,17 +62,15 @@ const FieldBuilder = () => {
     clearErrors();
   };
 
-  // Handle all Input Validations
-  const handleInputValidation = () => {
-    if (label === "") {
-      setLabelError(true);
-    }
-  };
-
   // Handle Submit Button
   const handleSubmit = async () => {
     setIsLoading(true);
-    handleInputValidation();
+
+    if (label === "") {
+      setLabelError(true);
+    } else {
+      setLabelError("");
+    }
 
     // If there is error in input validation, we return
     if (labelError || choiceError) {
@@ -79,7 +79,12 @@ const FieldBuilder = () => {
     }
 
     let updatedChoices = choices;
-    if (!choices.includes(defaultValue) && choices.length == 50) {
+
+    if (choices.length == 0 && defaultValue == "") {
+      setFormError("Please enter atleast 1 choice");
+      setIsLoading(false);
+      return;
+    } else if (!choices.includes(defaultValue) && choices.length == 50) {
       setChoiceError("You cannot have more than 50 choices");
       setIsLoading(false);
       return;
@@ -107,6 +112,7 @@ const FieldBuilder = () => {
       console.log("Error:", error?.message || error);
     }
 
+    setFormError("");
     setIsLoading(false);
     console.log("Submitted Data");
     console.log(payload);
@@ -239,6 +245,7 @@ const FieldBuilder = () => {
                 ))}
               </div>
               {choiceError && <p className="error">{choiceError}</p>}
+              {formError && <p className="error">{formError}</p>}
             </div>
           </div>
           <div className="input-container order-container">
