@@ -18,7 +18,6 @@ const FieldBuilder = () => {
   const [defaultValue, setDefaultValue] = useState(storedDefaultValue);
   const [choice, setChoice] = useState(storedChoice);
   const [choices, setChoices] = useState(storedChoices);
-  console.log("Hello    FieldBuilder   choices:", choices);
   const [order, setOrder] = useState(storedOrder);
 
   const [labelError, setLabelError] = useState(false);
